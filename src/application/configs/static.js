@@ -1,11 +1,16 @@
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1. 项目名称：AggregatorAPP (一个典型的Aggregator应用系统)
-2. 文件名：src -> configs -> session.js
-3. 作者：tangxuyang@lifang.com
-4. 备注：session的使用配置
+2. 文件名：src -> configs -> static.js
+3. 作者：zhaohuagang@lifang.com
+4. 备注：静态资源配置
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-module.exports = {
-    "secret" : "wkzf" ,
-    "expires" : 30 * 60 * 60 ,  //失效时间，单位：秒
-    "prefix" : "financial_sess:"  //session前缀
+export default {
+    "prefix": {
+        "dev" : "//dev01.fe.wkzf",
+        "test" : "//test01.fe.wkzf",
+        "sim" : "//sim01.fe.wkzf",
+        "prod" : "//cdn01.wkzf.com"
+    } ,
+    "util" : "/fe_public_library" ,
+    "app" : "/financial2_fe"    
 } ;

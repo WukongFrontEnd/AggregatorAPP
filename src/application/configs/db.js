@@ -1,30 +1,30 @@
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1. 项目名称：AggregatorAPP (一个典型的Aggregator应用系统)
 2. 文件名：src -> configs -> db.js
-3. 作者：tangxuyang@lifang.com
+3. 作者：zhaohuagang@lifang.com
 4. 备注：数据库连接配置
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-module.exports = {
+export default {
     "dev" : {
         "host" : "10.1.18.221" ,  //主机名，可以是IP地址或者域名
-        "usr" : "root" ,  //
+        "usr" : "root" , 
         "pwd" : "123456" ,
         "db" : "agent"
     } ,
     "test" : {
-        "host" : "http://test.db.wkzf.com" ,  //主机名，可以是IP地址或者域名
+        "host" : "http://test.db.wkzf.com" ,
         "usr" : "root" ,  //
         "pwd" : "123456" ,
         "db" : "agent"
     } ,
     "sim" : {
-        "host" : "http://sim.db.wkzf.com" ,  //主机名，可以是IP地址或者域名
+        "host" : "http://sim.db.wkzf.com" , 
         "usr" : "root" ,  //
         "pwd" : "123456" ,
         "db" : "agent"
     } ,
     "prod" : {
-        "host" : "http://db.wkzf.com" ,  //主机名，可以是IP地址或者域名
+        "host" : "http://db.wkzf.com" , 
         "usr" : "root" ,  //
         "pwd" : "123456" ,
         "db" : "agent"
