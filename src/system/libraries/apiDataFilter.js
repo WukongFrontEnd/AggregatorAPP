@@ -24,7 +24,7 @@ class ApiDataFilter {
     请求数据
     @converter : Boolean | Object { "mapper" : "user" , "method" : "list" }
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-    static async  request({ apiUrl , method = "get" , converter = false}) {
+    async  request({ apiUrl , method = "get" , converter = false}) {
         let opts = {
             "uri" : apiUrl ,
             "json" : apiConf.json ,
@@ -40,22 +40,22 @@ class ApiDataFilter {
         if(converter) opts.transform = this.getConverter(converter) ;
         /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         搞正事
-        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-        try {
-            let result = method.toLowerCase() === "get" ? await request.get(opts) : await request.post(opts) ;
+        -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/       
+        try {            
+            let result = method.toLowerCase() === "get" ? await request.get(opts) : await request.post(opts) ;            
             return result ;
         }
         catch({ name , message }) {
             logger.error("[Failed to request " + apiUrl + "]======" + "name : " + name + " ; message : " + message) ;
             return { status : 0 , message : "Failed to request "+ apiUrl , data : null } ;
-        }
+        }        
     }
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     获取数据转换器
     @converter : Object { "mapper" : "user" , "method" : "list" }
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
     getConverter(converter) {
-        let mappers = loader.load("application/mappers") ;
+        let mappers = loader.load("application/mappers") ;        
         if( ! _.isObject(converter)) return null ;
         if ( converter.mapper ==="undefined" || converter.method ==="undefined") return null ;
         return mappers[converter.mapper]["default"][converter.method] ;

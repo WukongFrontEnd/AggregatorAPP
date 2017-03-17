@@ -15,7 +15,7 @@ import SystemApiControllerBasic from "../../system/core/controllers/api" ;
 class AppApiControllerBasic extends SystemApiControllerBasic {
     constructor(req, res, next) {
         super(req, res, next) ;
-        Object.assign(this.jsonStr, {
+        Object.assign(this.jsonObject, {
             "status" : 1 ,
             "message" : "" ,
             "data" : null
