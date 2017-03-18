@@ -15,5 +15,5 @@ import appConf from "../../../application/configs/app" ;
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 export default function(app){   
     app.set("views", path.join(__dirname, "..", "..","..","..", "views")) ;
-    app.set("view engine", appConf.viewEnginee) ;    
+    app.set("view engine", appConf.viewEnginee) ; 
 } ;
