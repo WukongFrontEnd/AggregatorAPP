@@ -23,20 +23,20 @@ class SystemRendererControllerBasic {
     @lang : 语言种类，比如：cn | en 等
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
     loadLangConf({ path , lang}) {
-        let langObject = require("../../../../languages/" + path + ".json") ;
-        for(let m in langObject) {
-            let item = langObject[m] ;
-            let value = null ;
-            for(let n in item) {
-                if(n === lang) value = item[n] ;
-                delete item[n] ;
-            }
-            langObject[m] = value ;
-        }
+        let langObject = require("../../../../languages/" + path + ".json") ;        
+        let templateLangData = {} ;        
+        for(let m in langObject) {                      
+            for(let n in langObject[m]) {
+                if(n === lang) {
+                    templateLangData[m] = langObject[m][n] ;
+                    continue ;
+                }             
+            }            
+        }        
         /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         最后把处理好的整个对象扩展到this.templateData.lang下
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-        Object.assign(this.templateData, { "lang" : langObject }) ;
+        Object.assign(this.templateData, { "lang" : templateLangData }) ;
     }
 }
 
