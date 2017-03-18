@@ -10,6 +10,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import SystemRendererControllerBasic from "../../system/core/controllers/renderer" ;
 import config from "../../system/libraries/config" ;
+import UrlParser from "../../system/libraries/urlParser" ;
 import appConf from "../configs/app" ;
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 创建一个渲染器实例
@@ -17,6 +18,8 @@ import appConf from "../configs/app" ;
 class AppRendererControllerBasic extends SystemRendererControllerBasic {
     constructor(req, res, next) {
         super(req, res, next) ;
+        let up = new UrlParser(req.originalUrl) ;
+        let MCCombined = up.getMCCombined() ;
         Object.assign(this.templateData, {
             "appType" : appConf.appType ,
             "version" : appConf.version ,
@@ -26,9 +29,9 @@ class AppRendererControllerBasic extends SystemRendererControllerBasic {
             "appStaticPrefix" : config.getStaticPrefix("app") ,
             "utilStaticPrefix" : config.getStaticPrefix("util") ,
             "extraStylesheets" : [] ,
-            "matchStylesheet" : false ,
+            "matchStylesheet" : MCCombined ,
             "extraJavascripts" : [] ,
-            "matchJavascript" : false
+            "matchJavascript" : MCCombined
         }) ;        
     }    
 }

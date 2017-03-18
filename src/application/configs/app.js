@@ -7,7 +7,7 @@
 export default {
     "version" : "1.0" ,  //这个版本号将跟着项目管理规定的版本号走
     "name" : "AggregatorAPP1" ,  //应用的名字，在创建日志对应目录的时候需要用到
-    "appType" : "mobile" ,  //应用类型，可以是：pc | mobile 分别表示pc端应用和移动端应用，在模板head区域meta元素会体现不同
+    "appType" : "pc" ,  //应用类型，可以是：pc | mobile 分别表示pc端应用和移动端应用，在模板head区域meta元素会体现不同
     "viewEnginee" : "ejs" ,   //应用系统使用的模板引擎，可以是：ejs | jade | hbs，当然前提条件是npm install了相应模板引擎模块
-    "homeRouter" : "example"  //域名根目录，也就是首页使用哪个路由进行注册
+    "homeRouter" : "example"  //域名根路径，也就是首页使用哪个路由进行注册
 } ;

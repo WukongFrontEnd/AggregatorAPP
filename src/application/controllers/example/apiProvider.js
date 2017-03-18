@@ -10,6 +10,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import AppApiControllerBasic from "../api" ;
 import apiDataFilter from "../../../system/libraries/apiDataFilter" ;
+import benchmark from "../../../system/libraries/benchmark" ;
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 创建一个渲染器实例
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -36,6 +37,8 @@ class RestfulApi extends AppApiControllerBasic {
     进行api数据调用范例
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
     async invokeApi() {
+        let bm = new benchmark ;
+        bm.mark("start") ;
         let adf = new apiDataFilter ;
         let result = await adf.request({
             apiUrl : "http://10.0.18.79:8107/yfyk/getHouseRentDetailInfo.rest?agentId=0&houseId=1465045" ,
@@ -44,7 +47,10 @@ class RestfulApi extends AppApiControllerBasic {
                 mapper : "example" ,
                 method : "detail"
             }
-        }) ;        
+        }) ;
+        bm.mark("end") ; 
+        console.log(bm.markers) ;
+        console.log("总耗时：" + bm.elapsedTime({ startMarker : "start" , endMarker : "end" }) + " s") ;
         this.res.send(JSON.stringify(result)) ;
     }
 }
