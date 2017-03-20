@@ -1,0 +1,59 @@
+|--bin
+    |--www
+|--dist (目录和src下基本一致，只不过缺少src目录下所有的非js文件)   
+|--languages (语言配置文件目录)
+|--node_modules
+|--src
+    |--application
+        |--configs
+            |--api.js
+            |--app.js
+            |--cors.js
+            |--db.js
+            |--log.js
+            |--middleware.js
+            |--redis.js
+            |--session.js
+            |--static.js
+        |--controllers
+            |--example
+            |--api.js
+            |--renderer.js
+        |--mappers
+        |--routers
+        |--app.js
+    |--system
+        |--core
+            |--bootstrap
+                |--globalMiddlewares.js
+                |--index.js
+                |--routerRegister.js
+                |--viewEngine.js
+            |--controllers
+                |--api.js
+                |--renderer.js
+        |--libraries
+            |--apiDataFilter.js
+            |--benchmark.js
+            |--config.js
+            |--loader.js
+            |--logger.js
+            |--urlParser.js            
+        |--middlewares
+            |--api
+                |--cors.js
+            |--global
+                |--logger.js
+                |--session.js
+            |--renderer                
+|--views
+    |--components
+        |--head.ejs
+        |--footer.ejs
+    |--example
+    |--error.ejs
+|--.babelrc
+|--.gitignore
+|--package.json
+|--pms.config.js
+|--README.md

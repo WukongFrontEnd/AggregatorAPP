@@ -46,7 +46,7 @@ class ApiDataFilter {
             return result ;
         }
         catch({ name , message }) {
-            logger.error("[Failed to request " + apiUrl + "]======" + "name : " + name + " ; message : " + message) ;
+            logger.error("[Failed to request " + apiUrl + "]======" + "request options : " + JSON.stringify(opts) + " ; name : " + name + " ; message : " + message) ;
             return { status : 0 , message : "Failed to request "+ apiUrl , data : null } ;
         }        
     }
