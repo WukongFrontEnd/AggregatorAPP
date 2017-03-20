@@ -35,6 +35,7 @@
         |--libraries
             |--apiDataFilter.js
             |--benchmark.js
+            |--captcha.js
             |--config.js
             |--loader.js
             |--logger.js
