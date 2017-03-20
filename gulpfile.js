@@ -5,7 +5,6 @@ var babel = require("gulp-babel") ;
 var clean = require("gulp-clean") ;
 var uglify = require('gulp-uglify') ;
 var strip = require("gulp-strip-comments") ;
-var watch = require("gulp-watch") ;
 var streamify = require("gulp-streamify") ;
 var gulpSequence = require("gulp-sequence") ;
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
