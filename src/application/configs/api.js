@@ -10,7 +10,8 @@ export default {
     "json" : true ,
     "timeout" : 60 * 1000 ,  //超时请求时间，单位：毫秒
     "successCode" : 1 ,  //restfulAPI返回的状态码status多少代表成功
-    "sessionExpireCode" : 1502 ,   //restfulAPI返回的状态码status多少代表session失效   
+    "sessionExpireCode" : 1502 ,   //restfulAPI返回的状态码status多少代表session失效
+    "providerMail" : "zhaohuagang@lifang.com;42547335@qq.com" ,  //当接口不通的时候发邮件给TA
     "prefix" : {
         "dev" : "http://dev.hr.wkzf.com" ,
         "test" : "http://test.hr.wkzf.com" ,
