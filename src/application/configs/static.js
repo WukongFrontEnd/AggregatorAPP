@@ -12,5 +12,5 @@ export default {
         "prod" : "//cdn01.wkzf.com"
     } ,
     "util" : "/fe_public_library" ,
-    "app" : "/financial2_fe"    
+    "app" : "/yfyk2h5_fe"    
 } ;

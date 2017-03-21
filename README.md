@@ -1,6 +1,6 @@
 |--bin
     |--www
-|--dist (目录和src下基本一致，只不过缺少src目录下所有的非js文件)   
+|--dist (目录和src下基本一致，只不过缺少src目录下所有的非js文件) 
 |--languages (语言配置文件目录)
 |--node_modules
 |--src
@@ -40,14 +40,14 @@
             |--loader.js
             |--logger.js
             |--urlParser.js
-            |--mail.js       
+            |--mail.js
         |--middlewares
             |--api
                 |--cors.js
             |--global
                 |--logger.js
                 |--session.js
-            |--renderer                
+            |--renderer
 |--views
     |--components
         |--head.ejs
@@ -68,3 +68,7 @@
 4. 配置更细腻；
 5. apiDataFilter接口调用不通的时候自动发邮件给相应的负责人，避免接口出错而不知情
 6. 系统工具包增加了基准测试、邮件发送、验证码模块，后面还将陆续增加常用模块
+
+
+计划还需要实现的功能：
+将配置目录内容当做全局配置读取，任何地方使用
