@@ -90,37 +90,37 @@ export default {
     ],
     "prod": [
         {
-            "host": "redis11",
+            "host": "redis1",
             "password": "",
             "port": 7000,
             "ddl": 3600
         },
         {
-            "host": "redis12",
+            "host": "redis2",
             "password": "",
             "port": 7000,
             "ddl": 3600
         },
         {
-            "host": "redis21",
+            "host": "redis3",
             "password": "",
             "port": 7000,
             "ddl": 3600
         },
         {
-            "host": "redis22",
+            "host": "redis4",
             "password": "",
             "port": 7000,
             "ddl": 3600
         },
         {
-            "host": "redis31",
+            "host": "redis5",
             "password": "",
             "port": 7000,
             "ddl": 3600
         },
         {
-            "host": "redis32",
+            "host": "redis6",
             "password": "",
             "port": 7000,
             "ddl": 3600
