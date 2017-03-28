@@ -13,6 +13,7 @@ import loader from "../../libraries/loader"
 import bodyParser from "body-parser" ;
 import cookieParser from "cookie-parser" ;
 import _ from "lodash" ;
+import appConf from "../../../application/configs/middleware" ;
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 取出system级和application级的中间件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
@@ -40,7 +41,7 @@ export default function(app){
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     其他的在application中配置的全局中间件注册
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-    let appGlobalMiddList = app.locals.confs.middleware.global ;
+    let appGlobalMiddList = appConf.global ;
     if (_.isArray(appGlobalMiddList) && appGlobalMiddList.length) {
         for (let n of appGlobalMiddList) {
             if (_.isFunction(applicationGlobalMiddlewares[n]["default"])) app.use(applicationGlobalMiddlewares[n]["default"]) ;
