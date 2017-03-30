@@ -5,24 +5,24 @@
 4. 备注：系统工具库 -> 邮件发送类
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import nodemailer from "nodemailer" ;
-import mailConf from "../../application/configs/mail" ;
 import logger from "./logger" ;
 import _ from "lodash" ;
 
 class Mail {
-    constructor() {
-        
+    constructor(req) {
+        this.req = req ;
+        this.mailConf = this.req.app.locals.confs.mail ;
     }
     static send({ to , cc = "" , subject , content , attachments = null , success , failed }) {
         /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         开启一个 SMTP 连接池
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-        let transporter = nodemailer.createTransport(mailConf) ;
+        let transporter = nodemailer.createTransport(this.mailConf) ;
         /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
         邮件选项
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
         let opts = {
-            "from" : mailConf.auth.user ,  //这里不能定制发件人地址，否者邮件发布出去
+            "from" : this.mailConf.auth.user ,  //这里不能定制发件人地址，否者邮件发布出去
             "to" : to , 
             "cc" : cc ,        
             "subject" : subject ,         
@@ -34,7 +34,7 @@ class Mail {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
         transporter.sendMail(opts, (error, msg) => {
             if(error) {
-                logger.error("[Failed to send mail ]======mail options : " + JSON.stringify(opts) + " ; mail config : " + JSON.stringify(mailConf) + " ; error : " + error ) ;       
+                logger.error("[Failed to send mail ]======mail options : " + JSON.stringify(opts) + " ; mail config : " + JSON.stringify(this.mailConf) + " ; error : " + error ) ;       
                 if (_.isFunction(failed)) failed(error) ;                             
             }
             else {

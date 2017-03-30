@@ -9,15 +9,14 @@
 加载配置及工具
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import SystemRendererControllerBasic from "../../system/core/controllers/renderer" ;
-import config from "../../system/libraries/config" ;
 import UrlParser from "../../system/libraries/urlParser" ;
-import appConf from "../configs/app" ;
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 创建一个渲染器实例
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 class AppRendererControllerBasic extends SystemRendererControllerBasic {
     constructor(req, res, next) {
         super(req, res, next) ;
+        let appConf = this.req.app.locals.confs.app ;
         let up = new UrlParser(req.originalUrl) ;
         let MCCombined = up.getMCCombined() ;
         Object.assign(this.templateData, {
@@ -26,16 +25,22 @@ class AppRendererControllerBasic extends SystemRendererControllerBasic {
             "title" : "" ,
             "keywords" : "" ,
             "description" : "" ,
-            "appStaticPrefix" : config.getStaticPrefix("app") ,
-            "utilStaticPrefix" : config.getStaticPrefix("util") ,
+            "appStaticPrefix" : this.getStaticPrefix("app") ,
+            "utilStaticPrefix" : this.getStaticPrefix("util") ,
             "extraStylesheets" : [] ,
             "matchStylesheet" : MCCombined ,
             "extraJavascripts" : [] ,
             "matchJavascript" : MCCombined
         }) ;        
-    }    
+    }
+    /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    获取静态资源路径前缀
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
+    getStaticPrefix(type) {
+        let staticConf = this.req.app.locals.confs.static ;
+        let stage_env = this.req.app.locals.stage_env ;
+        return staticConf["prefix"][stage_env] + staticConf[type] ;
+    }
 }
-/*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-最后将render暴露出去
------------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
+
 export default AppRendererControllerBasic ;

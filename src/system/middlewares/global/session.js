@@ -10,16 +10,17 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import session from "express-session" ;
 import Redis from "ioredis" ;
-import sessionConf from "../../../application/configs/session";
 import connectRedis from "connect-redis" ;
-import config from "../../libraries/config" ;
+import redisUtil from "../../libraries/redis" ;
 
-let sessionMd ;
-let redisStore = connectRedis(session) ;
-sessionMd = session({
-    secret : sessionConf.secret ,
-    store : new redisStore({ client : new Redis.Cluster(config.getRedisConf()) , ttl: sessionConf.timeout , prefix : sessionConf.prefix }) ,
-    saveUninitialized : false ,
-    resave : false
-})
-export default sessionMd ;
+export default function (req, res, next) {
+    let sessionConf = req.app.locals.confs.session ;
+    let redisStore = connectRedis(session) ;
+    session({
+        secret : sessionConf.secret ,
+        store : new redisStore({ client : new Redis.Cluster(redisUtil.getRedisConf(req)) , ttl: sessionConf.timeout , prefix : sessionConf.prefix }) ,
+        saveUninitialized : false ,
+        resave : false
+    }) ;
+    next() ;
+} ;

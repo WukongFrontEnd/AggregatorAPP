@@ -10,29 +10,29 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import request from "request-promise" ;
 import logger from "./logger" ;
-import apiConf from "../../application/configs/api" ;
-import loader from "./loader" ;
 import _ from "lodash" ;
-import mail from "./mail" ;
+import Mail from "./mail" ;
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ApiDataFilter类的定义
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 class ApiDataFilter {
-    constructor() {
-
+    constructor(req) {
+        this.req = req ;
+        this.apiConf = this.req.app.locals.confs.api ;
     }
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     请求数据
     @converter : Boolean | Object { "mapper" : "user" , "method" : "list" }
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-    async  request({ apiUrl , method = "get" , converter = false}) {
+    async  request({ apiPath , method = "get" , converter = false}) {
+        let apiUrl = this.pathToUrl(apiPath) ;
         let opts = {
             "uri" : apiUrl ,
-            "json" : apiConf.json ,
-            "timeout" : apiConf.timeout ,
-            "encoding" : apiConf.encoding ,
+            "json" : this.apiConf.json ,
+            "timeout" : this.apiConf.timeout ,
+            "encoding" : this.apiConf.encoding ,
             "headers" : {
-                "content-type" : apiConf.contentType
+                "content-type" : this.apiConf.contentType
             }  
         } ;
         /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -62,25 +62,40 @@ class ApiDataFilter {
     获取数据转换器
     @converter : Object { "mapper" : "user" , "method" : "list" }
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-    getConverter(converter) {
-        let mappers = loader.load("application/mappers") ;        
+    getConverter(converter) {            
         if( ! _.isObject(converter)) return null ;
-        if ( converter.mapper ==="undefined" || converter.method ==="undefined") return null ;
-        return mappers[converter.mapper]["default"][converter.method] ;
+        if ( converter.mapper ==="undefined" || converter.method ==="undefined") return null ;        
+        return this.req.app.locals.mappers[converter.mapper][converter.method] ;
     }
      /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     如果接口不通，就给相关责任人发送提醒邮件
     @converter : Object { "mapper" : "user" , "method" : "list" }
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
     remind({apiUrl}) {
-        if(apiConf.providerMail) {
+        let mail = new Mail(this.req) ;
+        if(this.apiConf.providerMail) {
             mail.send({
-                "to" : apiConf.providerMail ,
+                "to" : this.apiConf.providerMail ,
                 "subject" : "十万火急！您提供给Node层的接口出问题了！" ,
                 "content" : "大兄弟，您负责的地址为" + apiUrl + "的接口请求不通了，麻烦赶紧排查一下，以免影响用户使用！"                    
             }) ;
         }
     }
+    /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    根据apiPath返回apiUrl
+    @apiPath：从api配置中suffix往下层写如："example.rent.detail"
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
+    pathToUrl(apiPath) {
+        let pathArray = apiPath.split(".") ;
+        let prefix = this.apiConf.prefix[this.req.app.locals.stage_env] ;
+        let suffix = this.apiConf.suffix ;
+        for(let n = 0 ; n < pathArray.length ; n ++) {
+            suffix = suffix[pathArray[n]] ;
+        }
+        if(suffix === "undefined") suffix = "" ;
+        return prefix + "/" + suffix ;
+    }
+
      /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     整个class定义结束
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/

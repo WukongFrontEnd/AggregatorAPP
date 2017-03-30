@@ -13,14 +13,16 @@ export default {
     "sessionExpireCode" : 1502 ,   //restfulAPI返回的状态码status多少代表session失效
     "providerMail" : "zhaohuagang@lifang.com;42547335@qq.com" ,  //当接口不通的时候发邮件给TA
     "prefix" : {
-        "dev" : "http://dev.hr.wkzf.com" ,
-        "test" : "http://test.hr.wkzf.com" ,
-        "sim" : "http://sim.hr.wkzf.com" ,
-        "prod" : "http://hr.wkzf.com" 
+        "dev" : "http://10.0.18.79:8107/yfyk" ,
+        "test" : "http://10.0.18.79:8107/yfyk" ,
+        "sim" : "http://10.0.18.79:8107/yfyk" ,
+        "prod" : "http://10.0.18.79:8107/yfyk" 
     } ,
     "suffix" : { //后缀代表接口去掉prefix的部分，这里可以是无限级的树状结构，根据自己的需要
         "example" : {
-
+            "rent" : {
+                "detail" : "getHouseRentDetailInfo.rest?agentId=0&houseId=1465045"
+            }
         }
     }
 } ;

@@ -39,9 +39,9 @@ class RestfulApi extends AppApiControllerBasic {
     async invokeApi() {
         let bm = new benchmark ;
         bm.mark("start") ;
-        let adf = new apiDataFilter ;
+        let adf = new apiDataFilter(this.req) ;
         let result = await adf.request({
-            apiUrl : "http://10.0.18.79:8107/yfyk/getHouseRentDetailInfo.rest?agentId=0&houseId=1465045" ,
+            apiPath : "example.rent.detail" ,
             method : "get" ,
             converter : {
                 mapper : "example" ,
