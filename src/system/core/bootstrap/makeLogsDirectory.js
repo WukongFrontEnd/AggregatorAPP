@@ -25,7 +25,7 @@ class MakeLogsDirectory {
         let logConf = app.locals.confs.log ;
         let appName = app.locals.confs.log.appLogDirName ;        
         let appenders = logConf.appenders ;
-        if(appenders === "undefined") return ;
+        if(appenders === undefined) return ;
 
         let baseDir = path.join(__dirname, "..", "..", "..", "..", "..", "logs") ;
         if ( ! fs.existsSync(baseDir)) fs.mkdirSync(baseDir) ;

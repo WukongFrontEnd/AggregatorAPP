@@ -29,9 +29,9 @@ gulp.task("clean", function() {
 定义对js进行es6转es5的任务
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 gulp.task("es6-es5" , function () {  
-    gulp.src(compilePath.src.js)       
+    gulp.src(compilePath.src.js)          
         .pipe(strip())  //去除注释
-        .pipe(streamify(babel()))
+        .pipe(streamify(babel()))       
         .pipe(uglify())
         .pipe(gulp.dest(compilePath.dist.js)) ;
 }) ; 
