@@ -9,9 +9,8 @@ import logger from "./logger" ;
 import _ from "lodash" ;
 
 class Mail {
-    constructor(req) {
-        this.req = req ;
-        this.mailConf = this.req.app.locals.confs.mail ;
+    constructor(app) {        
+        this.mailConf = app.locals.confs.mail ;
     }
     static send({ to , cc = "" , subject , content , attachments = null , success , failed }) {
         /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------

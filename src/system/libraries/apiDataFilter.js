@@ -9,16 +9,17 @@
 加载相关资源
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import request from "request-promise" ;
-import logger from "./logger" ;
+import Logger from "./logger" ;
 import _ from "lodash" ;
 import Mail from "./mail" ;
 /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ApiDataFilter类的定义
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 class ApiDataFilter {
-    constructor(req) {
-        this.req = req ;
-        this.apiConf = this.req.app.locals.confs.api ;
+    constructor(app) {
+        this.app = app ;   
+        this.apiConf = this.app.locals.confs.api ;
+        this.logger = new Logger(this.app) ;
     }
     /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     请求数据
@@ -47,7 +48,7 @@ class ApiDataFilter {
             return result ;
         }
         catch({ name , message }) {
-            logger.error("[Failed to request " + apiUrl + "]======" + "request options : " + JSON.stringify(opts) + " ; name : " + name + " ; message : " + message) ;
+            this.logger.error("[Failed to request " + apiUrl + "]======" + "request options : " + JSON.stringify(opts) + " ; name : " + name + " ; message : " + message) ;
             /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
             如果设置了提醒相应的接口提供者就要发邮件
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/ 
@@ -65,14 +66,14 @@ class ApiDataFilter {
     getConverter(converter) {            
         if( ! _.isObject(converter)) return null ;
         if ( converter.mapper ==="undefined" || converter.method ==="undefined") return null ;        
-        return this.req.app.locals.mappers[converter.mapper][converter.method] ;
+        return this.app.locals.mappers[converter.mapper][converter.method] ;
     }
      /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
     如果接口不通，就给相关责任人发送提醒邮件
     @converter : Object { "mapper" : "user" , "method" : "list" }
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
     remind({apiUrl}) {
-        let mail = new Mail(this.req) ;
+        let mail = new Mail(this.app) ;
         if(this.apiConf.providerMail) {
             mail.send({
                 "to" : this.apiConf.providerMail ,
@@ -87,7 +88,7 @@ class ApiDataFilter {
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
     pathToUrl(apiPath) {
         let pathArray = apiPath.split(".") ;
-        let prefix = this.apiConf.prefix[this.req.app.locals.stage_env] ;
+        let prefix = this.apiConf.prefix[this.app.locals.stage_env] ;
         let suffix = this.apiConf.suffix ;
         for(let n = 0 ; n < pathArray.length ; n ++) {
             suffix = suffix[pathArray[n]] ;

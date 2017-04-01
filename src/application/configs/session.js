@@ -7,5 +7,5 @@
 export default {
     "secret" : "wkzf" ,
     "expires" : 30 * 60 * 60 ,  //失效时间，单位：秒
-    "prefix" : "financial_sess:"  //session前缀
+    "prefix" : "aggregator_sess:"  //session前缀
 } ;

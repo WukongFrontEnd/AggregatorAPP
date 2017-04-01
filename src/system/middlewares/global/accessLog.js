@@ -1,26 +1,29 @@
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1. 项目名称：AggregatorAPP (一个典型的Aggregator应用系统)
-2. 文件名：src -> system -> middlewares -> global -> session.js
+2. 文件名：src -> system -> middlewares -> global ->  accessLog.js
 3. 作者：zhaohuagang@lifang.com
-4. 备注：对session的处理
+4. 备注：访问日志全局中间件
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 
 /*++----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-载入相关资源
+载入资源
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-import session from "express-session" ;
-import Redis from "ioredis" ;
-import connectRedis from "connect-redis" ;
-import redisUtil from "../../libraries/redis" ;
+import Logger from "../../libraries/logger" ;
 
 export default function (req, res, next) {
-    let sessionConf = req.app.locals.confs.session ;
-    let redisStore = connectRedis(session) ;
-    session({
-        secret : sessionConf.secret ,
-        store : new redisStore({ client : new Redis.Cluster(redisUtil.getRedisConf(req)) , ttl: sessionConf.timeout , prefix : sessionConf.prefix }) ,
-        saveUninitialized : false ,
-        resave : false
-    }) ;
+    let logger = new  Logger(req.app) ;
+    let logInfo = "request url : " + req.url + " ; " ;    
+    switch (req.method) {
+        case "POST" :
+            logger.info(logInfo + "request params : " + JSON.stringify(req.body)) ;
+            break ;
+        case "GET" :
+            logger.info(logInfo + "request params : " + JSON.stringify(req.query)) ;
+            break ;
+        default:
+            logger.warn("invalid request!") ;
+            next(new Error("invalid request!")) ;
+            break ;
+    } ;
     next() ;
 } ;

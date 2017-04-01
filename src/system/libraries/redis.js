@@ -4,15 +4,13 @@
 3. 作者：zhaohuagang@lifang.com
 4. 备注：对session的处理
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
+
 class Redis {
     constructor() {
         
     }    
-    /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    获取redis配置
-    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
-    static getRedisConf(req) {
-        let redisArray = req.app.locals.confs.redis[req.app.locals.stage_env] ;
+    static getRedisConf(app) {
+        let redisArray = app.locals.confs.redis[app.locals.stage_env] ;
         let redisConfArray = [] ;
         if (redisArray && redisArray.length) {
             for (let v of redisArray) {
@@ -27,3 +25,4 @@ class Redis {
 }
 
 export default Redis ;
+

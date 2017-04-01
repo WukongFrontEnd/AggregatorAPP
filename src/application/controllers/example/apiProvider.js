@@ -39,7 +39,7 @@ class RestfulApi extends AppApiControllerBasic {
     async invokeApi() {
         let bm = new benchmark ;
         bm.mark("start") ;
-        let adf = new apiDataFilter(this.req) ;
+        let adf = new apiDataFilter(this.req.app) ;
         let result = await adf.request({
             apiPath : "example.rent.detail" ,
             method : "get" ,
@@ -48,7 +48,7 @@ class RestfulApi extends AppApiControllerBasic {
                 method : "detail"
             }
         }) ;
-        bm.mark("end") ; 
+        bm.mark("end") ;         
         console.log(bm.markers) ;
         console.log("总耗时：" + bm.elapsedTime({ startMarker : "start" , endMarker : "end" }) + " s") ;
         this.res.send(JSON.stringify(result)) ;
