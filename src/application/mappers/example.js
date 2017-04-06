@@ -9,11 +9,11 @@
 加载相关资源
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
 import objectMapper from "object-mapper" ;
-import logger from "../../system/libraries/logger" ;
+//import logger from "../../system/libraries/logger" ;
 
 let detailMap = {
     status : ["status", {
-        key : "code" ,
+        key : "status-code" ,
         transform : function(value){
             let val = parseInt(value, 10) ;
             if(val === 1) return 200 ;
@@ -30,11 +30,11 @@ class ExampleMapper {
 
     static detail(src) {
         try {
-            return objectMapper(src, detailMap);
+            return objectMapper(src, detailMap) ;
         } 
         catch (error) {
-            logger.error(`Example Mapper==>detail:${error},src:${JSON.stringify(src)}`);
-            return null;
+            //logger.error(`Example Mapper==>detail:${error},src:${JSON.stringify(src)}`);
+            return null ;
         }
     }
 }
