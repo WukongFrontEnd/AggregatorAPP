@@ -11,6 +11,7 @@ import _ from "lodash" ;
 class Mail {
     constructor(app) {        
         this.mailConf = app.locals.confs.mail ;
+        this.logger = new Logger(app) ;
     }
     static send({ to , cc = "" , subject , content , attachments = null , success , failed }) {
         /*++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -33,7 +34,7 @@ class Mail {
         -----------------------------------------------------------------------------------------------------------------------------------------------------------------------++*/
         transporter.sendMail(opts, (error, msg) => {
             if(error) {
-                logger.error("[Failed to send mail ]======mail options : " + JSON.stringify(opts) + " ; mail config : " + JSON.stringify(this.mailConf) + " ; error : " + error ) ;       
+                this.logger.error("[Failed to send mail ]======mail options : " + JSON.stringify(opts) + " ; mail config : " + JSON.stringify(this.mailConf) + " ; error : " + error ) ;       
                 if (_.isFunction(failed)) failed(error) ;                             
             }
             else {
