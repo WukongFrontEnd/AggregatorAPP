@@ -93,7 +93,7 @@ class ApiDataFilter {
         for(let n = 0 ; n < pathArray.length ; n ++) {
             suffix = suffix[pathArray[n]] ;
         }
-        if(suffix === "undefined") suffix = "" ;
+        if(suffix === undefined) suffix = "" ;
         return prefix + "/" + suffix ;
     }
 
