@@ -24,7 +24,8 @@ class UrlParser {
         let pathNameArray = new Array  ;
         let pathname = this.urlObj.pathname ;        
         if(pathname && pathname.length > 1) {
-            pathname = pathname.substring(1, pathname.length) ;            
+            pathname = pathname.substring(1, pathname.length) ;  
+            if( ! pathname) return null ;          
             pathNameArray = pathname.split(this.pathSeparator) ;
         }        
         return (pathNameArray.length > index) ? pathNameArray[index] : null ;
